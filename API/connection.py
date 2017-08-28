@@ -1,4 +1,5 @@
 # imports
+import json
 import requests
 
 
@@ -7,9 +8,10 @@ def api_key(file_name):
 		return source.readline()
 
 def get_time_series_data_json(api_file_name, database_code, dataset_code):
-	url = "https://www.quandl.com/api/v3/datasets/"
-	payload = {database_code:"/", dataset_code:"/", "data.json?api_key=":api_key(api_file_name)}
-	r = requests.get(url, params=payload)
-	return r.json()
+	return requests.get("https://www.quandl.com/api/v3/datasets/" + database_code + "/" + dataset_code + ".json?api_key=" + api_key("api_key.txt")).json()
 
-print(get_time_series_data_json("api_key.txt", "WIKI", "FB"))
+
+
+if __name__ == "__main__":
+	lme_cobolt = get_time_series_data_json("api_key.txt", "LME", "PR_CO")
+	print(lme_cobolt['dataset'])
